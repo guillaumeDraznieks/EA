@@ -1,7 +1,3 @@
-# Systèmes 1D
-# Pas de discrétisation
-# Conditions aux limites périodiques
-
 import numpy as np
 import matplotlib.pyplot as plt
 

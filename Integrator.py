@@ -13,6 +13,10 @@ class Integrator():
     if(self.n==self.nb_pas_max):
       print("Attention, nombre maximal de pas atteint")
 
+
+def direBJ():
+    print("yoyoyo")
+
 # Ne fonctionne qu'avec un pas d'espace fixe
 # Conditions de bord périodiques
 
