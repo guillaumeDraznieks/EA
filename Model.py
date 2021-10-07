@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-class Model1D():
+class Model():
   def __init__(self, longueur, n_mailles, dimension, myPDESystem):
     self.longueur = longueur
     self.n_mailles = n_mailles

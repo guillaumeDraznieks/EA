@@ -1,3 +1,6 @@
+import numpy as np
+from Model import *
+
 class Integrator():
   def __init__(self,schema,  CFL=1.0):
     if(schema=="LaxFriedrich"):
@@ -12,10 +15,6 @@ class Integrator():
       self.step(myModel)
     if(self.n==self.nb_pas_max):
       print("Attention, nombre maximal de pas atteint")
-
-
-def direBJ():
-    print("yoyoyo")
 
 # Ne fonctionne qu'avec un pas d'espace fixe
 # Conditions de bord périodiques
