@@ -23,13 +23,16 @@ class Model():
   
   def plot(self):
     if self.n>1:
-      y = np.sin(self.x_ctr ** 2)    
-      fig, axs = plt.subplots(self.n)
-      fig.suptitle('Etat du système au temps '+str(self.T))
-      for i in range(self.n):
-        axs[i].plot(self.x_ctr, self.U[:,i])
+        y = np.sin(self.x_ctr ** 2)    
+        fig, axs = plt.subplots(self.n)
+        fig.suptitle('Etat du système au temps '+str(self.T))
+        for i in range(self.n):
+            axs[i].plot(self.x_ctr, self.U[:,i])
+        plt.show()
+            
     else:
       y = np.sin(self.x_ctr ** 2)    
       fig, axs = plt.subplots()
       fig.suptitle('Etat du système au temps '+str(self.T))
       axs.plot(self.x_ctr, self.U[:,0])
+      plt.show()
