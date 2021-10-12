@@ -5,7 +5,7 @@ class Integrator():
   def __init__(self,schema,  CFL=1.0):
     if(schema=="LaxFriedrich"):
       print("Vous avez choisi d'intégrer via le schéma de Lax Friedrich avec CFL="+str(CFL))
-      self.step = lambda myModel : LaxFriedrich1D(myModel, CFL)
+      self.step = lambda myModel : Lax_wendroff(myModel, CFL)
       self.nb_pas_max = 500
       self.n = 0
       
@@ -41,3 +41,32 @@ def LaxFriedrich1D(myModel, CFL):
   # On update le modèle
   myModel.T+=delta_T
   myModel.U=U_neuf 
+
+def Lax_wendroff(myModel, CFL):
+  U_ancien = myModel.U
+  f_U = myModel.f(U_ancien)
+  f_D = np.zeros(f_U.shape)
+  f_G = np.zeros(f_U.shape)
+  f_D[:-1]=f_U[1:]
+  f_D[-1]=f_U[0]
+  f_G[1:]=f_U[:-1]
+  f_G[0]=f_U[-1]
+
+  U_mid = np.zeros(myModel.U.shape)
+  U_mid[1:]=0.5*(U_ancien[:-1]+U_ancien[1:])
+  U_mid[0]=0.5*(U_ancien[-1]+U_ancien[0])
+
+  A_G = np.zeros((myModel.n_mailles,myModel.n,myModel.n))
+  A_G = myModel.J(U_mid)
+  A_D = np.zeros((myModel.n_mailles,myModel.n,myModel.n))
+  A_D[:-1] = A_G[1:]
+  A_D[-1] = A_G[0]
+
+  speed = myModel.maxSoundSpeed()
+  dx = myModel.dx
+  dt = CFL*dx/speed
+
+  # On update le modèle
+  myModel.T+=dt
+  for i in range(myModel.n_mailles):
+    myModel.U[i]+=0.5*dt/dx*(f_G[i]-f_D[i])+0.5*dt**2/dx**2*(A_D[i].dot(f_D[i]-f_U[i])-A_G[i].dot(f_U[i]-f_G[i]))
