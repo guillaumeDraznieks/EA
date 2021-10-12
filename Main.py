@@ -17,3 +17,5 @@ myIntegrator = Integrator("LaxFriedrich", CFL=1.5)
 myIntegrator.integrate(myModel,0.03)
 
 myModel.plot()
+
+print("bonjour")
